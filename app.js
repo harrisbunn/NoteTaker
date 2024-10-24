@@ -1,5 +1,4 @@
-import chalk from 'chalk';
-import {getNotes, addNote} from './notes.js';
+import {addNote, removeNote} from './notes.js';
 import yargs from 'yargs';
 import { hideBin} from 'yargs/helpers';
 
@@ -19,9 +18,7 @@ yargs(hideBin(process.argv))
                 type: 'string'
             }
         },
-        handler: function(argv) {
-            addNote(argv.title, argv.body);
-        }
+        handler: ((argv) => addNote(argv.title, argv.body))
     })
 .parse();
 
@@ -29,9 +26,14 @@ yargs(hideBin(process.argv))
     .command({
         command: 'remove',
         describe: 'Remove a note',
-        handler: function() {
-            console.log('Removing the note!');
-        }
+        builder: {
+            title: {
+                describe: 'Note title',
+                demandOption: true,
+                type: 'string'
+            }
+        },
+        handler: ((argv) => removeNote(argv.title))
     })
 .parse();
 
@@ -55,6 +57,3 @@ yargs(hideBin(process.argv))
     })
 .parse();
 
-//let input = yargs(hideBin(process.argv)).parse(); // parse the input arguments , accessed through input._['index'] with 0 being the first argument after npm start
-
-//console.log(input); // access that first argument passed after npm start
