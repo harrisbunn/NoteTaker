@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import getNotes from './notes.js';
+import {getNotes, addNote} from './notes.js';
 import yargs from 'yargs';
 import { hideBin} from 'yargs/helpers';
 
@@ -20,8 +20,7 @@ yargs(hideBin(process.argv))
             }
         },
         handler: function(argv) {
-            console.log('Title: ' + argv.title);
-            console.log('Body: ' + argv.body)
+            addNote(argv.title, argv.body);
         }
     })
 .parse();
